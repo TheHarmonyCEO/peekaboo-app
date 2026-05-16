@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>カーテンいないいないばあ！</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="stage">
+    <div id="animal-container">
+      <img id="animal-img" src="" alt="動物" class="hidden">
+    </div>
+
+    <div id="curtain-container" class="shake">
+      <div id="curtain-left" class="curtain"></div>
+      <div id="curtain-right" class="curtain"></div>
+    </div>
+  </div>
+
+  <audio id="bgm" src="bgm.mp3" loop></audio>
+  <audio id="sound-open" src="open.mp3"></audio>
+  <audio id="sound-pop" src="pop.mp3"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
