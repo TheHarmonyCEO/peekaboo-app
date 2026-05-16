@@ -101,3 +101,11 @@ body {
   70% { transform: scale(0.9); }
   100% { transform: scale(1); opacity: 1; }
 }
+/* 絵文字を超巨大にするスタイル */
+#animal-emoji {
+  font-size: 60vmin; /* 画面サイズの60%の大きさ */
+  line-height: 1;
+  text-align: center;
+  user-select: none; /* スマホで長押し選択されるのを防ぐ */
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3)); /* 絵文字に影をつけて立体的に！ */
+}
