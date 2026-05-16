@@ -1,82 +1,34 @@
-// 要素の取得
-const curtainContainer = document.getElementById('curtain-container');
-const animalEmoji = document.getElementById('animal-emoji');
-const bgm = document.getElementById('bgm');
-const soundOpen = document.getElementById('sound-open');
-const soundPop = document.getElementById('sound-pop');
+/* 👇 一番下に追加してください */
 
-// 状態管理
-let isAnimating = false;
-let isBgmPlaying = false;
-let nextEmoji = '';
-
-// 🌟 1歳半の娘さん専用・特大絵文字リスト
-const emojiList = [
-  // 動物・生き物
-  '🐶','🐱','🐭','🐹','🐰','🦊','🐻','🐼','🐻‍❄️','🐨','🐯','🦁','🐮','🐷','🐽','🐸','🐵','🐒','🐧','🐦','🐤','🐣','🐥','🦆','🦅','🦉','🦇','🐺','🐗','🐴','🦄','🐝','🪱','🐛','🦋','🐌','🐞','🐜','🪰','🪲','🐢','🐍','🦎','🦖','🦕','🐙','🦑','🦐','🦞','🦀','🐡','🐠','🐟','🐬','🐳','🐋','🦈','🦭','🐊','🐅','🐆','🦓','🦍','🦧','🐘','🦛','🦏','🐪','🐫','🦒','🦘','🐃','🐂','🐄','🐎','🐖','🐏','🐑','🦙','🐐','🦌','🐕','🐩','🐈','🐓','🦃','🦚','🦜','🦢','🦩','🕊️','🐇','🦝','🦨','🦡','🦫','🦦','🦥','🐁','🐀','🐿️','🦔',
-  
-  // 食べ物
-  '🍏','🍎','🍐','🍊','🍋','🍌','🍉','🍇','🍓','🫐','🍈','🍒','🍑','🥭','🍍','🥥','🥝','🍅','🍆','🥑','🥦','🥬','🥒','🌽','🥕','🥔','🍠','🥐','🥯','🍞','🥖','🥨','🧀','🥚','🍳','🥞','🧇','🥓','🥩','🍗','🍖','🌭','🍔','🍟','🍕','🥪','🌮','🌯','🥗','🥘','🍝','🍜','🍲','🍛','🍣','🍱','🥟','🍤','🍙','🍚','🍘','🍥','🍢','🍡','🍧','🍨','🍦','🥧','🧁','🍰','🎂','🍮','🍭','🍬','🍫','🍿','🍩','🍪','🌰','🥜','🍯','🥛','🍼','🧃',
-  
-  // 乗り物
-  '🚗','🚕','🚙','🚌','🚎','🏎️','🚓','互','🚑','🚒','🚐','🛻','🚚','🚛','🚜','🛴','🚲','🛵','🏍️','🛺','🚨','🚂','🚆','🚅','🚄','🚈','🚝','🚞','🚋','🚃','🚁','🛩️','✈️','🚀','🛸','🛶','⛵','🚤','🛥️','🛳️','⛴️','🚢',
-  
-  // 🌟【新規】分かりやすい表情（にこにこ、えーん、ぷんぷん、おねむ など）
-  '😀','😃','😄','😊','🥰','😋','😢','😭','😡','😠','😱','😮','😴',
-
-  // 🌟【新規】ぶんぼうぐ・身の回りのもの
-  '✂️','📎','✏️','📓','📖',
-
-  // 🌟【新規】お皿・フォークなどの食器
-  '🍴','🥄','🍽️','🥣',
-
-  // おばけ・おもちゃ・自然
-  '👻','👽','👾','🤖','💩','🎃','🎈','🎏','🎀','🎁','🧸','🪁','🪀','🎨','⚽','⚾','🏀','🎵','🥁','🎷','🎺','🎸','🌞','🌝','⭐','🌟','🌠','☁️','⛄','🔥','🌈','☂️'
-];
-
-function prepareNextEmoji() {
-  nextEmoji = emojiList[Math.floor(Math.random() * emojiList.length)];
+/* === ひらがなボタンのスタイル === */
+#word-button {
+  position: absolute;
+  bottom: 12%; /* 画面の下の方に配置 */
+  z-index: 20; /* カーテンより手前に表示 */
+  background-color: #ffffff;
+  color: #ff4757;
+  font-size: 8vmin;
+  font-weight: bold;
+  padding: 15px 40px;
+  border: 5px solid #ff4757;
+  border-radius: 50px;
+  box-shadow: 0 8px 0 #ff4757; /* ぷっくりした立体感 */
+  cursor: pointer;
+  user-select: none;
 }
 
-prepareNextEmoji();
+/* ボタンが押された時の凹むアニメーション */
+#word-button:active {
+  transform: translateY(8px);
+  box-shadow: 0 0 0 #ff4757;
+}
 
-curtainContainer.addEventListener('click', () => {
-  if (isAnimating) return;
-  isAnimating = true;
+/* ボタン出現時のアニメーション（下からフワッと） */
+.slide-up {
+  animation: slideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
 
-  if (!isBgmPlaying) {
-    bgm.play().catch(e => console.log('BGM再生エラー:', e));
-    isBgmPlaying = true;
-  }
-
-  soundOpen.currentTime = 0;
-  soundOpen.play();
-  curtainContainer.classList.remove('shake');
-
-  animalEmoji.innerText = nextEmoji;
-  curtainContainer.classList.add('open');
-
-  setTimeout(() => {
-    animalEmoji.classList.remove('hidden');
-    animalEmoji.classList.add('bounce-in');
-    soundPop.currentTime = 0;
-    soundPop.play();
-  }, 400);
-
-  setTimeout(() => {
-    closeCurtain();
-  }, 3500);
-});
-
-function closeCurtain() {
-  curtainContainer.classList.remove('open');
-  
-  setTimeout(() => {
-    animalEmoji.classList.add('hidden');
-    animalImg = animalEmoji.classList.remove('bounce-in'); // 安全のためリセット
-    curtainContainer.classList.add('shake');
-    isAnimating = false;
-    
-    prepareNextEmoji();
-  }, 800);
+@keyframes slideUp {
+  0% { transform: translateY(50px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
 }
