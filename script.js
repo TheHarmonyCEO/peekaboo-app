@@ -45,13 +45,31 @@ function speakWord(text) {
   window.speechSynthesis.speak(uttr);
 }
 
-// ボタンを押した時の処理
-wordButton.addEventListener('click', (e) => {
-  speakWord(currentItem.name);
-  wordButton.classList.remove('slide-up');
-  void wordButton.offsetWidth; 
-  wordButton.classList.add('slide-up');
-});
+/* 👇 style.css の一番下に追加 */
+
+/* ランダムジャンプのベース（JSで設定した角度に跳ねる） */
+.joyful-jump {
+  animation: randomJump 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes randomJump {
+  0% { 
+    transform: translate(0, 0) scale(1); 
+  }
+  30% { 
+    /* JSから指定された移動距離（--jump-x, --jump-y）を使って、ランダムな方向に跳ね上がります */
+    transform: translate(var(--jump-x), var(--jump-y)) scale(1.2); 
+  }
+  50% { 
+    transform: translate(0, 0) scale(0.9); /* 着地して少し潰れる */
+  }
+  70% { 
+    transform: translate(0, -10px) scale(1.05); /* 小さくもう一跳ね */
+  }
+  100% { 
+    transform: translate(0, 0) scale(1); /* 元に戻る */
+  }
+}
 
 curtainContainer.addEventListener('click', () => {
   if (isAnimating) return;
