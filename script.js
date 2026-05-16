@@ -48,7 +48,7 @@ function speakWord(text) {
 /* 👇 style.css の一番下に追加 */
 
 /* ランダムジャンプのベース（JSで設定した角度に跳ねる） */
-.joyful-jump {
+joyful-jump {
   animation: randomJump 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
