@@ -114,16 +114,20 @@ body {
 /* === ひらがなボタンのスタイル === */
 #word-button {
   position: absolute;
-  bottom: 12%; /* 画面の下の方に配置 */
-  z-index: 20; /* カーテンより手前に表示 */
+  bottom: 12%; 
+  z-index: 20; 
   background-color: #ffffff;
-  color: #ff4757;
+  
+  /* 👇 ここから 3箇所 を変更します */
+  color: #000000;              /* 文字を赤から黒に変更 */
+  border: 5px solid #000000;   /* 枠線を赤から黒に変更 */
+  border-radius: 50px;
+  box-shadow: 0 8px 0 #000000; /* 下の立体的な影を赤から黒に変更 */
+  /* 👆 ここまで */
+  
   font-size: 8vmin;
   font-weight: bold;
   padding: 15px 40px;
-  border: 5px solid #ff4757;
-  border-radius: 50px;
-  box-shadow: 0 8px 0 #ff4757; /* ぷっくりした立体感 */
   cursor: pointer;
   user-select: none;
 }
@@ -131,7 +135,7 @@ body {
 /* ボタンが押された時の凹むアニメーション */
 #word-button:active {
   transform: translateY(8px);
-  box-shadow: 0 0 0 #ff4757;
+  box-shadow: 0 0 0 #000000; /* 👇 押された時の影も黒に変更 */
 }
 
 /* ボタン出現時のアニメーション（下からフワッと） */
