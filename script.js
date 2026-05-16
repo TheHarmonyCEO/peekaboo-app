@@ -45,37 +45,33 @@ function speakWord(text) {
   window.speechSynthesis.speak(uttr);
 }
 
-/* 👇 style.css の一番下に追加 */
+// ボタンを押した時の処理（喋る ＆ ランダム方向にジャンプ！）
+wordButton.addEventListener('click', (e) => {
+  speakWord(currentItem.name);
+  
+  // 🎲 ランダムなジャンプ方向を計算
+  const randomX = (Math.random() - 0.5) * 120; 
+  const randomY = -(Math.random() * 30 + 40); 
 
-/* ランダムジャンプのベース（JSで設定した角度に跳ねる） */
-joyful-jump {
-  animation: randomJump 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-}
+  // CSSの変数に値をセット
+  animalEmoji.style.setProperty('--jump-x', `${randomX}px`);
+  animalEmoji.style.setProperty('--jump-y', `${randomY}px`);
 
-@keyframes randomJump {
-  0% { 
-    transform: translate(0, 0) scale(1); 
-  }
-  30% { 
-    /* JSから指定された移動距離（--jump-x, --jump-y）を使って、ランダムな方向に跳ね上がります */
-    transform: translate(var(--jump-x), var(--jump-y)) scale(1.2); 
-  }
-  50% { 
-    transform: translate(0, 0) scale(0.9); /* 着地して少し潰れる */
-  }
-  70% { 
-    transform: translate(0, -10px) scale(1.05); /* 小さくもう一跳ね */
-  }
-  100% { 
-    transform: translate(0, 0) scale(1); /* 元に戻る */
-  }
-}
+  // アニメーションを一度リセットして実行
+  animalEmoji.classList.remove('joyful-jump');
+  void animalEmoji.offsetWidth; 
+  animalEmoji.classList.add('joyful-jump');
+  
+  // ボタン自体のアニメーション
+  wordButton.classList.remove('slide-up');
+  void wordButton.offsetWidth; 
+  wordButton.classList.add('slide-up');
+});
 
 curtainContainer.addEventListener('click', () => {
   if (isAnimating) return;
   isAnimating = true;
 
-  // 💡 音声ファイルが無い場合もエラーを出さずに無視する安全装置
   if (!isBgmPlaying) {
     bgm.play().catch(e => console.log('BGMなし（無視します）'));
     isBgmPlaying = true;
@@ -115,6 +111,7 @@ function closeCurtain() {
   setTimeout(() => {
     animalEmoji.classList.add('hidden');
     animalEmoji.classList.remove('bounce-in');
+    animalEmoji.classList.remove('joyful-jump'); // ジャンプ用クラスもここで綺麗にお片付け
     curtainContainer.classList.add('shake');
     isAnimating = false;
     
